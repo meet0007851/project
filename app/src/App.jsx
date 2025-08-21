@@ -1,31 +1,50 @@
-import React, {  useState } from 'react';
-import Login from './components/auth/Login';
-import EmployeeDashboard from './components/dashboard/EmployeeDashboard';
-import AdminDashboard from './components/dashboard/AdminDashboard';
- 
-const App = () => {
-   const [user,setUser] = useState(null)
-   const handleLogin = (email,password) =>{
-          if(email == "admin@ab.com" && password == "123")
-          {
-            console.log("this is admin site")
-          }
-          else if(email == "user@ab.com" && password == "123")
-          {
-            console.log("this is user site")
-          }
-          else{
-            alert("invalid credential")
-          }
-   }
-  
-  return (
- <>
-{!user ? <Login handleLogin={handleLogin}/>: ''}
-   {/* <EmployeeDashboard/> */}
-  {/* <AdminDashboard/>  */}
- </>
-  )
-} 
+import React, { useContext, useEffect, useState } from "react";
+import Login from "./components/auth/Login";
+import EmployeeDashboard from "./components/dashboard/EmployeeDashboard";
+import AdminDashboard from "./components/dashboard/AdminDashboard";
+import { AuthContext } from "./context/AuthProvider";
 
-export default App
+const App = () => {
+  const [user, setUser] = useState(null);
+    const authData = useContext(AuthContext)
+
+    // useEffect(()=>{
+    //     if(authData){
+    //         const loggedInUser = localStorage.getItem("loggedInUser")
+    //       if(loggedInUser){
+    //         setUser(loggedInUser.role)
+    //       }
+    //       }
+    // },[authData])
+    
+  const handleLogin = (email, password) => {
+    if (email == "admin@ab.com" && password == "123") {
+      setUser({role : 'admin'});
+      localStorage.setItem('loggedInUser',JSON.stringify({role : 'admin'}))
+    } else if (authData) {
+      const employee = authData.employee.find((e) => email == e.email && e.password == password)
+      if(employee){ 
+      setUser({role : 'employee'});
+      }
+      localStorage.setItem('loggedInUser',JSON.stringify({role : 'employee'}))
+    
+    } else {
+      alert("invalid credential");
+    }
+  };
+
+
+  return (
+    <>
+      {!user ? (
+        <Login handleLogin={handleLogin} />
+      ) : user === "admin" ? (
+        <AdminDashboard />
+      ) : (
+        <EmployeeDashboard />
+      )}
+    </>
+  );
+};
+
+export default App;

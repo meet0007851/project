@@ -3,7 +3,7 @@ import React from "react";
 const TaskList = () => {
   return (
     <div className="">
-      <div className="flex items-center justify-start gap-6  flex-nowrap py-5 h-full w-full overflow-x-auto  bg-amber-950  mt-10 px-5">
+      <div className="flex items-center overflow-auto justify-start gap-6  flex-nowrap py-5 h-full w-full overflow-x-auto    mt-10 px-5">
         
         {/* Card 1 */}
         <div className="h-[250px] w-[300px] bg-red-400 rounded-2xl shadow-lg p-6 flex flex-col justify-between text-white">
