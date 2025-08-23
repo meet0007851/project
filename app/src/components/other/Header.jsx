@@ -1,6 +1,7 @@
 import React from 'react'
 
-function Header() {
+function Header({data}) {
+ 
   return (
 
     
@@ -9,7 +10,7 @@ function Header() {
   {/* Left: Greeting */}
   <h1 className="text-white leading-tight drop-shadow-md">
     <span className="block text-xs sm:text-sm/5 opacity-90">Hello,</span>
-    <span className="text-2xl sm:text-3xl font-bold tracking-tight">Meet</span>
+    <span className="text-2xl sm:text-3xl font-bold tracking-tight">{data.firstName}</span>
   </h1>
 
   {/* Right: Action */}
